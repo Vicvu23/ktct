@@ -392,11 +392,10 @@ function nextQ() { if (ST.currentQ<39) { ST.currentQ++; renderQ(); } }
 function prevQ() { if (ST.currentQ>0) { ST.currentQ--; renderQ(); } }
 
 // ==================== SUBMIT & GRADING ====================
-// ==================== SUBMIT & GRADING ====================
 function submitExam() {
-  const unanswered = ST.answers.filter(a => a === null).length;
-  if (unanswered > 0 && !ST.submitted) {
-    if (!confirm('Còn ' + unanswered + ' câu chưa trả lời. Nộp bài?')) return;
+  const unanswered = ST.answers.filter(a=>a===null).length;
+  if (unanswered>0 && !ST.submitted) {
+    if (!confirm('Còn '+unanswered+' câu chưa trả lời. Nộp bài?')) return;
   }
   clearInterval(ST.timer);
   ST.submitted = true;
@@ -404,29 +403,21 @@ function submitExam() {
   renderQ();
   showScreen('result');
 
-  // Show preliminary result
-  document.getElementById('result-title').textContent = 'Kết quả — Đề ' + (ST.examIdx + 1);
+  // Hiển thị giao diện chờ chấm điểm
+  document.getElementById('result-title').textContent = 'Kết quả — Đề '+(ST.examIdx+1);
   const elapsed = 3600 - ST.timeLeft;
-  const em = Math.floor(elapsed / 60), es = elapsed % 60;
-  document.getElementById('result-sub').textContent = 'Hoàn thành sau ' + em + ' phút ' + es + ' giây';
+  const em = Math.floor(elapsed/60), es = elapsed%60;
+  document.getElementById('result-sub').textContent = 'Hoàn thành sau '+em+' phút '+es+' giây';
   document.getElementById('s-score').textContent = '...';
   document.getElementById('s-correct').textContent = '...';
   document.getElementById('s-wrong').textContent = '...';
   document.getElementById('detail-list').innerHTML = '<div style="text-align:center;padding:2rem;color:#666"><span class="spinner"></span> Đang chấm bài...</div>';
 
-  // Chấm điểm Offline (Giả lập độ trễ 500ms cho giống hệ thống đang xử lý)
+  // Gọi trực tiếp hàm chấm điểm Offline (Tắt hoàn toàn thời gian trễ)
   gradeExamOffline();
 }
 
-// ==================== BỘ ĐÁP ÁN (ANSWER KEY) ====================
-// Cú pháp: [ID Câu gốc]: [Vị trí đáp án đúng]
-// Trong đó: 0 là A, 1 là B, 2 là C, 3 là D
-// ==================== BỘ ĐÁP ÁN (ANSWER KEY FULL 689 CÂU) ====================
-// Cú pháp: [Số thứ tự câu]: [Vị trí đáp án đúng (0=A, 1=B, 2=C, 3=D)]
-// Dữ liệu được AI giải dựa trên giáo trình Kinh tế chính trị Mác-Lênin chuẩn.
-
 const ANSWER_KEY = {
-  // Chương 1 & 2
   1: 2, 2: 0, 3: 2, 4: 1, 5: 3, 6: 2, 7: 1, 8: 2, 9: 3, 10: 3,
   11: 0, 12: 3, 13: 3, 14: 3, 15: 3, 16: 3, 17: 3, 18: 2, 19: 1, 20: 3,
   21: 2, 22: 3, 23: 3, 24: 3, 25: 3, 26: 3, 27: 3, 28: 0, 29: 0, 30: 3,
@@ -443,8 +434,6 @@ const ANSWER_KEY = {
   131: 2, 132: 0, 133: 2, 134: 3, 135: 3, 136: 1, 137: 2, 138: 3, 139: 3, 140: 3,
   141: 3, 142: 3, 143: 3, 144: 3, 145: 3, 146: 3, 147: 3, 148: 1, 149: 3, 150: 1,
   151: 2, 152: 1, 153: 3, 154: 3, 155: 2, 156: 3, 157: 3, 158: 3, 159: 3, 160: 3,
-  
-  // Chương 3: Giá trị thặng dư
   161: 3, 162: 3, 163: 2, 164: 1, 165: 0, 166: 2, 167: 3, 168: 3, 169: 3, 170: 3,
   171: 1, 172: 0, 173: 2, 174: 3, 175: 3, 176: 3, 177: 2, 178: 3, 179: 1, 180: 3,
   181: 3, 182: 3, 183: 2, 184: 3, 185: 0, 186: 3, 187: 2, 188: 3, 189: 2, 190: 2,
@@ -461,8 +450,6 @@ const ANSWER_KEY = {
   291: 2, 292: 2, 293: 2, 294: 3, 295: 2, 296: 2, 297: 1, 298: 1, 299: 3, 300: 0,
   301: 2, 302: 3, 303: 3, 304: 1, 305: 2, 306: 0, 307: 3, 308: 2, 309: 3, 310: 0,
   311: 2, 312: 3, 313: 3, 314: 3, 315: 3, 316: 3, 317: 0, 318: 3, 319: 0, 320: 2,
-
-  // Chương 4 & 5: CNTB Độc quyền
   321: 2, 322: 0, 323: 3, 324: 2, 325: 3, 326: 3, 327: 1, 328: 3, 329: 0, 330: 0,
   331: 2, 332: 3, 333: 1, 334: 3, 335: 0, 336: 2, 337: 0, 338: 3, 339: 2, 340: 1,
   341: 2, 342: 2, 343: 1, 344: 3, 345: 1, 346: 3, 347: 2, 348: 3, 349: 3, 350: 2,
@@ -476,8 +463,6 @@ const ANSWER_KEY = {
   421: 3, 422: 0, 423: 1, 424: 2, 425: 1, 426: 2, 427: 0, 428: 3, 429: 1, 430: 1,
   431: 3, 432: 3, 433: 3, 434: 2, 435: 0, 436: 3, 437: 3, 438: 2, 439: 1, 440: 0,
   441: 1, 442: 2, 443: 2, 444: 1, 445: 1, 446: 1, 447: 3, 448: 3, 449: 3, 450: 1,
-
-  // Chương 6: Thời kỳ quá độ tại Việt Nam & Kinh tế vĩ mô XHCN
   451: 2, 452: 2, 453: 1, 454: 3, 455: 1, 456: 2, 457: 2, 458: 3, 459: 2, 460: 0,
   461: 3, 462: 3, 463: 2, 464: 3, 465: 2, 466: 2, 467: 2, 468: 1, 469: 2, 470: 3,
   471: 0, 472: 1, 473: 2, 474: 1, 475: 3, 476: 0, 477: 0, 478: 0, 479: 1, 480: 0,
@@ -506,9 +491,7 @@ const ANSWER_KEY = {
 
 function gradeExamOffline() {
   ST.questions.forEach((q, i) => {
-    // Trích xuất đáp án từ ANSWER_KEY, nếu chưa nhập thì tạm mặc định là 0 (A)
     const correctIdx = ANSWER_KEY[q.n] !== undefined ? ANSWER_KEY[q.n] : 0; 
-    
     ST.answerData[i] = {
       ans: correctIdx,
       sol: ANSWER_KEY[q.n] !== undefined 
@@ -518,7 +501,7 @@ function gradeExamOffline() {
   });
 
   ST.gradingInProgress = false;
-  buildResult();
+  buildResult(); // Gọi hàm hiển thị kết quả
 }
 
 // ==================== REVIEW ====================
