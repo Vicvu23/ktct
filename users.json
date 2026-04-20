@@ -6,16 +6,23 @@
     "role": "admin"
   },
   {
-    "username": "vutuananh",
-    "password": "123",
-    "fullname": "Vũ Tuấn Anh",
+    "username": "HoangKhanhLinh",
+    "password": "05042007",
+    "fullname": "Hoàng Khánh Linh",
+    "school": "KMA",
+    "role": "student"
+  },
+  {
+    "username": "CaoTanTien",
+    "password": "25112007",
+    "fullname": "Cao Tân Tiến",
     "school": "KMA",
     "role": "student"
   },
   {
     "username": "LeThiMinhTrang",
     "password": "04052007",
-    "fullname": "Học viên KMA",
+    "fullname": "Lê Thị Minh Trang",
     "school": "KMA",
     "role": "student"
   }
