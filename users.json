@@ -1,0 +1,22 @@
+[
+  {
+    "username": "admin",
+    "password": "adminpassword",
+    "fullname": "Quản trị viên Hệ thống",
+    "role": "admin"
+  },
+  {
+    "username": "vutuananh",
+    "password": "123",
+    "fullname": "Vũ Tuấn Anh",
+    "school": "KMA",
+    "role": "student"
+  },
+  {
+    "username": "AT190000",
+    "password": "123",
+    "fullname": "Học viên KMA",
+    "school": "KMA",
+    "role": "student"
+  }
+]s
