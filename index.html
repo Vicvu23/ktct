@@ -415,7 +415,7 @@ function submitExam() {
   document.getElementById('detail-list').innerHTML = '<div style="text-align:center;padding:2rem;color:#666"><span class="spinner"></span> Đang chấm bài...</div>';
 
   // Chấm điểm Offline (Giả lập độ trễ 500ms cho giống hệ thống đang xử lý)
-  setTimeout(gradeExamOffline, 500); 
+  gradeExamOffline();
 }
 
 // ==================== BỘ ĐÁP ÁN (ANSWER KEY) ====================
