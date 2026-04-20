@@ -1,7 +1,7 @@
 [
   {
     "username": "admin",
-    "password": "adminpassword",
+    "password": "admin",
     "fullname": "Quản trị viên Hệ thống",
     "role": "admin"
   },
@@ -19,4 +19,4 @@
     "school": "KMA",
     "role": "student"
   }
-]s
+]
