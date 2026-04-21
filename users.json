@@ -25,5 +25,12 @@
     "fullname": "Lê Thị Minh Trang",
     "school": "KMA",
     "role": "student"
-  }
+  },
+    {
+      "username": "TrinhThiHangNga",
+      "password": "07032007",
+      "fullname": "Trình Thị Hằng Nga",
+      "school": "KMA",
+      "role": "student"
+    }
 ]
